@@ -1,47 +1,55 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
-public class GunController : MonoBehaviour {
+public abstract class GunController : MonoBehaviour {
 
 	public float dmgPerShot = 20f;
 	public float fireRate = 1f;
-	public float reloadTime = 3f;
+
+	public int ammo;
+	public int maxAmmo;
 
 	public GameObject emmiter;
-	public GameObject bullet;
-	public float bulletSpeed = 10f;
+	public Text ammoText;
+	public Slider ammoSlider;
+	public Vector3 gunPosition;
 
-	float timer;
+	protected float timer;
 
-	private void Start()
+	virtual protected void Start()
 	{
-		timer = 0f;
+		ammoText = GameObject.FindGameObjectWithTag("AmmoText").GetComponent<Text>();
+		ammoSlider = GameObject.FindGameObjectWithTag("AmmoSlider").GetComponent<Slider>();
+
+		timer = 1f / fireRate;
+		UpdateAmmoCounter();
 	}
 
-	private void FixedUpdate()
+	virtual protected void Update()
 	{
-		timer += Time.deltaTime;
+		timer -= Time.deltaTime;
 	}
 
-	public bool Shoot()
+	abstract public bool Shoot();
+
+	public int AddAmmo(int count)
 	{
-		if(timer >= 1f / fireRate)
+		ammo += count;
+		if (ammo > maxAmmo)
 		{
-			GameObject tmpBullet = Instantiate(bullet, emmiter.transform.position, emmiter.transform.rotation) as GameObject;
-			tmpBullet.transform.Rotate(Vector3.up * -90f);
-			
-			Rigidbody tmpRb = tmpBullet.GetComponent<Rigidbody>();
-			tmpRb.AddForce(transform.forward * bulletSpeed * -1);
-
-			tmpBullet.GetComponent<BulletController>().bulletDamage = dmgPerShot;
-
-			Destroy(tmpBullet, 2.5f);
-
-			timer = 0f;
-			return true;
+			count = ammo - maxAmmo;
+			ammo = maxAmmo;
 		}
 
-		return false;
+		UpdateAmmoCounter();
+		return 0;
+	}
+
+	public void UpdateAmmoCounter()
+	{
+		ammoText.text = ammo.ToString();
+		ammoSlider.value = (float)ammo / (float)maxAmmo;
 	}
 
 }

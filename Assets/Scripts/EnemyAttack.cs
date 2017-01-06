@@ -11,6 +11,11 @@ public class EnemyAttack : MonoBehaviour {
 	float timer;
 	bool playerInRange = false;
 
+	private void Start()
+	{
+		player = GameObject.FindGameObjectWithTag("Player");
+	}
+
 	private void FixedUpdate()
 	{
 		timer += Time.deltaTime;

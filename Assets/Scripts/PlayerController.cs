@@ -6,22 +6,27 @@ public class PlayerController : MonoBehaviour {
 
 	public float maxHealth = 100f;
 	public float health;
-	public GunController gun;
+	public GameObject gun;
+	public GunController gunController;
 	public Slider healthSlider;
+	public Text healthText;
 	public Image damageOverlay;
 	public Color damageFlashColor;
 	public float flashTime = 2f;
+	public float healthTransitionTime = 0.1f;
 
-	bool damaged;
-	bool isTransitioningHealth;
-	float damagedTime;
+	bool damaged = false;
+	float damagedTime = -10;
+	float previousHealth;
 
 	private void Awake()
 	{
-		gun = GetComponentInChildren<GunController>();
+		gunController = GetComponentInChildren<GunController>();
 
 		health = maxHealth;
+		previousHealth = maxHealth;
 
+		healthText.text = health.ToString();
 		healthSlider.value = health / maxHealth;
 	}
 
@@ -34,25 +39,33 @@ public class PlayerController : MonoBehaviour {
 			damaged = false;
 		} else
 		{
+			healthSlider.value = Mathf.Lerp(previousHealth / maxHealth, health / maxHealth, (Time.time - damagedTime) / healthTransitionTime);
 			damageOverlay.color = Color.Lerp(damageFlashColor, Color.clear, (Time.time - damagedTime) / flashTime);
+		}
+
+		if (Input.GetButton("Fire1"))
+		{
+			gunController.Shoot();
 		}
 	}
 
-	private void FixedUpdate () {
-		if (Input.GetMouseButton(0))
-		{
-			gun.Shoot();
-		}
+	public void ChangeGun(GameObject gunNew)
+	{
+		Destroy(gun);
+		gun = Instantiate(gunNew, new Vector3(), new Quaternion(), gameObject.transform) as GameObject;
+		gunController = gun.GetComponent<GunController>();
+
+		gun.transform.localPosition = gunController.gunPosition;
 	}
 
 	public void GetHit(float damage, GameObject attacker)
 	{
+		previousHealth = health;
 		health -= damage;
-		healthSlider.value = health / maxHealth;
+		healthText.text = health.ToString();
 
 		damaged = true;
 
-		//Debug.Log("Hit");
 		if (health <= 0)
 		{
 			Die();
