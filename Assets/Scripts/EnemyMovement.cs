@@ -32,9 +32,8 @@ public class EnemyMovement : MonoBehaviour {
 		{
 			strength = distance;
 		}
-		strength = strength * 17f;
 
-		rb.AddForce(direction * strength, ForceMode.VelocityChange);
+		rb.AddForce(direction * strength);
 	}
 
 	public void moveTowards(Vector3 target)

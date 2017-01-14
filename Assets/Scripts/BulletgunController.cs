@@ -28,7 +28,9 @@ public class BulletgunController : GunController {
 			Rigidbody tmpRb = tmpBullet.GetComponent<Rigidbody>();
 			tmpRb.AddForce(transform.forward * bulletSpeed * -1);
 
-			tmpBullet.GetComponent<BulletController>().bulletDamage = dmgPerShot;
+			BulletController tmpBulletController = tmpBullet.GetComponent<BulletController>();
+			tmpBulletController.bulletDamage = dmgPerShot;
+			tmpBulletController.shotFrom = emmiter.transform.position;
 			UpdateAmmoCounter();
 
 			Destroy(tmpBullet, 2.5f);
