@@ -4,33 +4,21 @@ using System.Collections;
 public class EnemyMovement : MonoBehaviour {
 
 	public Transform target;
-	NavMeshAgent agent;
+	public float speed = 10f;
 	Rigidbody rb;
-	float timer;
 
 	void Start() {
 		target = GameObject.FindGameObjectWithTag("Player").transform;
-		timer = 0f;
 
 		rb = GetComponent<Rigidbody>();
-		agent = GetComponent<NavMeshAgent>();
 	}
 	
 	void FixedUpdate() {
-		timer -= Time.deltaTime;
-
-		if (timer <= 0)
-		{
-			stopKnockback();
-			agent.destination = target.position;
-		}
+		moveTowards(target.position);
 	}
 
 	public void knockback(Vector3 sourcePosition, float distance, bool fromSource = true)
 	{
-		agent.enabled = false;
-		rb.isKinematic = false;
-
 		float strength;
 		Vector3 direction = (transform.position - sourcePosition);
 		direction.y = 0;
@@ -44,16 +32,14 @@ public class EnemyMovement : MonoBehaviour {
 		{
 			strength = distance;
 		}
-		timer = strength / 2f;
-
 		strength = strength * 17f;
 
 		rb.AddForce(direction * strength, ForceMode.VelocityChange);
 	}
 
-	public void stopKnockback()
+	public void moveTowards(Vector3 target)
 	{
-		rb.isKinematic = true;
-		agent.enabled = true;
+		Vector3 delta = (target - transform.position).normalized;
+		rb.MovePosition(transform.position + delta * speed * Time.fixedDeltaTime);
 	}
 }
