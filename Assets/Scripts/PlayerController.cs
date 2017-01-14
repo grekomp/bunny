@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour {
 	public float flashTime = 2f;
 	public float healthTransitionTime = 0.1f;
 
+	public float bombDamage = 100f;
+	public float bombRadius = 3f;
 	public int bombs;
 	public int maxBombs;
 	public float bombDelay = 0.5f;
@@ -100,7 +102,10 @@ public class PlayerController : MonoBehaviour {
 			bombUsedTime = Time.time;
 			UpdateBombCounter();
 
-			Instantiate(bomb, transform.position, transform.rotation);
+			GameObject newBomb = Instantiate(bomb, transform.position, transform.rotation) as GameObject;
+			Bomb newBombController = newBomb.GetComponent<Bomb>();
+			newBombController.damage = bombDamage;
+			newBombController.radius = bombRadius;
 		}
 	} 
 

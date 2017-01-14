@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour {
 
 	public int score;
 	public int highScore;
+	public GameObject player;
 
 	Text scoreText;
 	Text highScoreText;
@@ -27,8 +28,17 @@ public class GameManager : MonoBehaviour {
 
 		scoreText = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<Text>();
 		highScoreText = GameObject.FindGameObjectWithTag("HighScoreText").GetComponent<Text>();
+		player = GameObject.FindGameObjectWithTag("Player");
 
 		UpdateScore();
+	}
+
+	private void Update()
+	{
+		if (Input.GetButton("Cancel"))
+		{
+			Exit();
+		}
 	}
 
 	public void AddScore(int score)
@@ -48,4 +58,8 @@ public class GameManager : MonoBehaviour {
 		highScoreText.text = highScore.ToString();
 	}
 
+	public void Exit()
+	{
+		Application.Quit();
+	}
 }

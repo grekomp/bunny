@@ -8,7 +8,7 @@ public class EnemyMovement : MonoBehaviour {
 	Rigidbody rb;
 
 	void Start() {
-		target = GameObject.FindGameObjectWithTag("Player").transform;
+		target = GameManager.instance.player.transform;
 
 		rb = GetComponent<Rigidbody>();
 	}

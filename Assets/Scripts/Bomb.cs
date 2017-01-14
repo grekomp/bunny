@@ -59,11 +59,9 @@ public class Bomb : MonoBehaviour {
 		{
 			if (other.CompareTag("Enemy") && !other.isTrigger)
 			{
-				//Debug.Log("Damaging");
-				
 				EnemyHealth enemy = other.GetComponent<EnemyHealth>();
-				//EnemyMovement enemyMove = other.GetComponent<EnemyMovement>();
-				//enemyMove.knockback(transform.position, radius, true);
+				EnemyMovement enemyMove = other.GetComponent<EnemyMovement>();
+				enemyMove.knockback(transform.position, radius * 2f);
 				enemy.GetHit(damage);
 			}
 		}
