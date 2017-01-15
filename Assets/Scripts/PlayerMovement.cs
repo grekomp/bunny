@@ -44,6 +44,6 @@ public class PlayerMovement : MonoBehaviour {
 			rb.MoveRotation(newRotation);
 		}
 
-
+		GameManager.instance.cursorLocation = rayHit.point;
 	}
 }

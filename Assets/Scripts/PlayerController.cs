@@ -32,11 +32,11 @@ public class PlayerController : MonoBehaviour {
 
 	float bombUsedTime;
 
-	private void Awake()
+	private void Start()
 	{
 		gunController = GetComponentInChildren<GunController>();
-		bombText = GameObject.FindGameObjectWithTag("BombText").GetComponent<Text>();
-		bombMaxText = GameObject.FindGameObjectWithTag("BombMaxText").GetComponent<Text>();
+		bombText = GameManager.instance.bombsText;
+		bombMaxText = GameManager.instance.maxBombsText;
 
 		health = maxHealth;
 		previousHealth = maxHealth;

@@ -13,7 +13,7 @@ public class EnemyAttack : MonoBehaviour {
 
 	private void Start()
 	{
-		player = GameObject.FindGameObjectWithTag("Player");
+		player = GameManager.instance.player;
 	}
 
 	private void FixedUpdate()

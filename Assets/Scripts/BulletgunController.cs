@@ -15,6 +15,7 @@ public class BulletgunController : GunController {
 	override protected void Update()
 	{
 		base.Update();
+		transform.rotation = Quaternion.LookRotation(transform.position - GameManager.instance.cursorLocation);
 	}
 
 	override public bool Shoot()
@@ -22,6 +23,7 @@ public class BulletgunController : GunController {
 		if (timer <= 0 && ammo > 0)
 		{
 			ammo--;
+
 			GameObject tmpBullet = Instantiate(bullet, emmiter.transform.position, emmiter.transform.rotation) as GameObject;
 			tmpBullet.transform.Rotate(Vector3.up * -90f);
 

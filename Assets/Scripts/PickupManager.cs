@@ -22,32 +22,18 @@ public class PickupManager : MonoBehaviour {
 		if (timer <= 0)
 		{
 			Vector3 point;
-			while (!RandomPoint(transform.position, range, out point)) { }
-			point.y = 0.6f;
-
-			int i = (int)Random.Range(0, pickups.Length);
-			GameObject pickup = pickups[i];
-
-			Spawn(point, pickup);
-
-			timer = spawnTime;
-		}
-	}
-
-	bool RandomPoint(Vector3 center, float range, out Vector3 result)
-	{
-		for (int i = 0; i < 30; i++)
-		{
-			Vector3 randomPoint = center + Random.insideUnitSphere * range;
-			NavMeshHit hit;
-			if (NavMesh.SamplePosition(randomPoint, out hit, 1.0f, NavMesh.AllAreas))
+			if (GameManager.RandomOnNavmesh(transform.position, range, out point))
 			{
-				result = hit.position;
-				return true;
+				point.y = 0.6f;
+
+				int i = (int)Random.Range(0, pickups.Length);
+				GameObject pickup = pickups[i];
+
+				Spawn(point, pickup);
+
+				timer = spawnTime;
 			}
 		}
-		result = Vector3.zero;
-		return false;
 	}
 
 	public void Spawn(Vector3 location, GameObject pickup)

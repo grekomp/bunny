@@ -6,16 +6,27 @@ public class Spawner : MonoBehaviour {
 	public GameObject entity;
 	public GameObject spawnParticles;
 
-	public void Spawn(float delay)
+	public GameObject prespawnEffect;
+
+	float delay = 2f;
+
+	public void Spawn()
 	{
-		Invoke("DoSpawn", delay);
+		PreSpawn();
+		Invoke("PostSpawn", delay);
 	}
 
-	protected void DoSpawn()
+	protected void PreSpawn()
+	{
+		GameObject effect = Instantiate(prespawnEffect, transform.position, transform.rotation) as GameObject;
+		Destroy(effect, delay);
+	}
+
+	protected void PostSpawn()
 	{
 		GameObject particles = Instantiate(spawnParticles, transform.position, transform.rotation) as GameObject;
-		Instantiate(entity, transform.position, transform.rotation);
-
+		particles.transform.Rotate(Vector3.right, -90f);
 		Destroy(particles, 2f);
+		Instantiate(entity, transform.position, transform.rotation);
 	}
 }

@@ -19,8 +19,8 @@ public abstract class GunController : MonoBehaviour {
 
 	virtual protected void Start()
 	{
-		ammoText = GameObject.FindGameObjectWithTag("AmmoText").GetComponent<Text>();
-		ammoSlider = GameObject.FindGameObjectWithTag("AmmoSlider").GetComponent<Slider>();
+		ammoText = GameManager.instance.ammoText;
+		ammoSlider = GameManager.instance.ammoSlider;
 
 		timer = 1f / fireRate;
 		UpdateAmmoCounter();

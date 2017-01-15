@@ -10,13 +10,14 @@ public class EnemyHealth : MonoBehaviour {
 	public Color flashColor = new Color(0.3f,0,0);
 	Color defaultEmissionColor;
 
-	MeshRenderer rend;
+	Renderer rend;
 
 	private void Awake()
 	{
 		health = maxHealth;
 
-		rend = transform.GetComponentInChildren<MeshRenderer>();
+		rend = transform.GetComponentInChildren<SkinnedMeshRenderer>();
+		if(rend == null) rend = transform.GetComponentInChildren<MeshRenderer>();
 		defaultEmissionColor = rend.material.GetColor("_EmissionColor");
 	}
 
@@ -36,7 +37,6 @@ public class EnemyHealth : MonoBehaviour {
 
 	public void flashStart()
 	{
-		Debug.Log("Flashing");
 		rend.material.SetColor("_EmissionColor", flashColor);
 	}
 
