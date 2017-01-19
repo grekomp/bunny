@@ -6,7 +6,7 @@ public class PickupManager : MonoBehaviour {
 	public GameObject[] pickups;
 	public float delay = 0f;
 	public float spawnTime = 10f;
-	public float range = 10.0f;
+	public float range = 6.0f;
 
 	float timer;
 
@@ -22,7 +22,7 @@ public class PickupManager : MonoBehaviour {
 		if (timer <= 0)
 		{
 			Vector3 point;
-			if (GameManager.RandomOnNavmesh(transform.position, range, out point))
+			if (GameManager.RandomOnNavmesh(GameManager.instance.player.transform.position, range, out point))
 			{
 				point.y = 0.6f;
 

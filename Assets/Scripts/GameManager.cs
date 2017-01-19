@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using UnityEngine.AI;
 
 public class GameManager : MonoBehaviour {
 
@@ -8,6 +9,10 @@ public class GameManager : MonoBehaviour {
 
 	public int score;
 	public int highScore;
+
+	public int level;
+	public float difficultyModifier;
+
 	public GameObject player;
 
 	public Text scoreText;
@@ -18,8 +23,12 @@ public class GameManager : MonoBehaviour {
 	public Text maxBombsText;
 	public Text healthText;
 	public Slider healthSlider;
+	public Text levelText;
 
 	public Vector3 cursorLocation;
+
+	public Texture2D cursorTexture;
+	public Vector2 cursorHotSpot = new Vector2(16, 16);
 
 	private void Awake()
 	{
@@ -34,6 +43,13 @@ public class GameManager : MonoBehaviour {
 
 		DontDestroyOnLoad(gameObject);
 
+		level = 1;
+		difficultyModifier = 1f;
+
+		Cursor.SetCursor(cursorTexture, cursorHotSpot, CursorMode.Auto);
+		cursorLocation = new Vector3();
+
+		// Getting all ui objects
 		player = GameObject.FindGameObjectWithTag("Player");
 		scoreText = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<Text>();
 		highScoreText = GameObject.FindGameObjectWithTag("HighScoreText").GetComponent<Text>();
@@ -43,8 +59,10 @@ public class GameManager : MonoBehaviour {
 		maxBombsText = GameObject.Find("MaxBombsText").GetComponent<Text>();
 		healthText = GameObject.Find("HealthText").GetComponent<Text>();
 		healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
+		levelText = GameObject.Find("LevelText").GetComponent<Text>();
 
 		UpdateScore();
+		UpdateLevel();
 	}
 
 	private void Update()
@@ -70,6 +88,17 @@ public class GameManager : MonoBehaviour {
 	{
 		scoreText.text = score.ToString();
 		highScoreText.text = highScore.ToString();
+	}
+
+	public void UpdateLevel()
+	{
+		levelText.text = level.ToString();
+	}
+
+	public void NextLevel()
+	{
+		level++;
+		UpdateLevel();
 	}
 
 	public void Exit()

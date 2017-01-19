@@ -27,7 +27,7 @@ public class BulletController : MonoBehaviour {
 					EnemyHealth enemy = other.GetComponent<EnemyHealth>();
 					enemy.GetHit(bulletDamage);
 					EnemyMovement enemyMove = other.GetComponent<EnemyMovement>();
-					enemyMove.knockback(shotFrom, 1f, false);
+					enemyMove.knockback(shotFrom, 2f, false);
 
 					GameObject tmpParticleSystem = Instantiate(enemyHitParticles, transform.position, transform.rotation) as GameObject;
 					ParticleSystem tmpPS = tmpParticleSystem.GetComponent<ParticleSystem>();

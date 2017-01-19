@@ -48,6 +48,7 @@ public class EnemyHealth : MonoBehaviour {
 	public void Die()
 	{
 		GameManager.instance.AddScore(score);
+		SpawnManager.instance.enemiesAlive--;
 		Destroy(gameObject);
 	}
 }
