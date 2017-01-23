@@ -13,13 +13,13 @@ public class SpawnManager : MonoBehaviour {
 
 	int maxEnemiesAlive = 60;
 
-	int startingEnemiesPerLevel = 20;
+	public int startingEnemiesPerLevel = 20;
 	int enemiesPerLevel = 20;
 	public int enemiesAlive = 0;
 	public int enemiesSpawned = 0;
 	public float spawnRate = 1f;
-	float defaultDelay = 2f;
-	float increasePerLevel = 0.2f;
+	float defaultDelay = 1f;
+	public float increasePerLevel = 0.2f;
 
 	float timer = 0f;
 	bool spawning = true;

@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour {
 	public Text healthText;
 	public Slider healthSlider;
 	public Text levelText;
+	public Text ammoLowText;
 
 	public Vector3 cursorLocation;
 
@@ -60,6 +61,7 @@ public class GameManager : MonoBehaviour {
 		healthText = GameObject.Find("HealthText").GetComponent<Text>();
 		healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
 		levelText = GameObject.Find("LevelText").GetComponent<Text>();
+		ammoLowText = GameObject.Find("AmmoLowText").GetComponent<Text>();
 
 		UpdateScore();
 		UpdateLevel();
@@ -92,7 +94,8 @@ public class GameManager : MonoBehaviour {
 
 	public void UpdateLevel()
 	{
-		levelText.text = level.ToString();
+		levelText.text = "Level " + level.ToString();
+		levelText.gameObject.GetComponent<Animator>().SetTrigger("NextLevel");
 	}
 
 	public void NextLevel()
