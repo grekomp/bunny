@@ -7,7 +7,7 @@ public class EnemyHealth : MonoBehaviour {
 	public float health;
 
 	public int score = 10;
-	public Color flashColor = new Color(0.3f,0,0);
+	Color flashColor = new Color(0.6f,0,0);
 	Color defaultEmissionColor;
 
 	Renderer rend;

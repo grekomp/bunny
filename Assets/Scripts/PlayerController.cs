@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour {
 	public float maxHealth = 100f;
 	public float health;
 	public GameObject gun;
+	public GameObject defaultGun;
 	public GunController gunController;
 	public Color damageFlashColor;
 	public float flashTime = 2f;
@@ -18,6 +19,7 @@ public class PlayerController : MonoBehaviour {
 	public int maxBombs;
 	public float bombDelay = 0.5f;
 	public GameObject bomb;
+	public float bombThrowRange = 2f;
 
 	public Text healthText;
 	public Slider healthSlider;
@@ -34,9 +36,11 @@ public class PlayerController : MonoBehaviour {
 
 	private void Start()
 	{
+		GameManager.instance.player = gameObject;
+
 		gunController = GetComponentInChildren<GunController>();
-		bombText = GameManager.instance.bombsText;
-		bombMaxText = GameManager.instance.maxBombsText;
+		bombText = GameManager.ui.bombsText;
+		bombMaxText = GameManager.ui.maxBombsText;
 
 		health = maxHealth;
 		previousHealth = maxHealth;
@@ -49,25 +53,28 @@ public class PlayerController : MonoBehaviour {
 
 	private void Update()
 	{
-		if (damaged)
+		if (GameManager.instance.playerAlive)
 		{
-			damagedTime = Time.time;
-			damageOverlay.color = damageFlashColor;
-			damaged = false;
-		} else
-		{
-			healthSlider.value = Mathf.Lerp(previousHealth / maxHealth, health / maxHealth, (Time.time - damagedTime) / healthTransitionTime);
-			damageOverlay.color = Color.Lerp(damageFlashColor, Color.clear, (Time.time - damagedTime) / flashTime);
-		}
+			if (damaged)
+			{
+				damagedTime = Time.time;
+				damageOverlay.color = damageFlashColor;
+				damaged = false;
+			} else
+			{
+				healthSlider.value = Mathf.Lerp(previousHealth / maxHealth, health / maxHealth, (Time.time - damagedTime) / healthTransitionTime);
+				damageOverlay.color = Color.Lerp(damageFlashColor, Color.clear, (Time.time - damagedTime) / flashTime);
+			}
 
-		if (Input.GetButton("Fire1"))
-		{
-			gunController.Shoot();
-		}
+			if (Input.GetButton("Fire1"))
+			{
+				gunController.Shoot();
+			}
 
-		if (Input.GetButton("Jump"))
-		{
-			UseBomb();
+			if (Input.GetButton("Jump"))
+			{
+				UseBomb();
+			}
 		}
 	}
 
@@ -103,6 +110,8 @@ public class PlayerController : MonoBehaviour {
 			UpdateBombCounter();
 
 			GameObject newBomb = Instantiate(bomb, transform.position, transform.rotation) as GameObject;
+			newBomb.GetComponent<Rigidbody>().AddForce(transform.forward * bombThrowRange * -1);
+			newBomb.GetComponent<Rigidbody>().AddForce(transform.up * 3f);
 			Bomb newBombController = newBomb.GetComponent<Bomb>();
 			newBombController.damage = bombDamage;
 			newBombController.radius = bombRadius;
@@ -130,8 +139,16 @@ public class PlayerController : MonoBehaviour {
 		return 0;
 	}
 
+	public void NoAmmo()
+	{
+		GameObject tmpWeapon = Instantiate(defaultGun, transform.position, transform.rotation, transform) as GameObject;
+		tmpWeapon.transform.localPosition = tmpWeapon.GetComponent<GunController>().gunPosition;
+
+		ChangeGun(tmpWeapon);
+	}
+
 	public void Die()
 	{
-		Debug.Log("Player dead");
+		GameManager.instance.PlayerDead();
 	}
 }

@@ -10,6 +10,8 @@ public abstract class GunController : MonoBehaviour {
 	public int ammo;
 	public int maxAmmo;
 
+	public float knockBack = 2f;
+
 	public GameObject emmiter;
 	public Text ammoText;
 	public Slider ammoSlider;
@@ -20,11 +22,11 @@ public abstract class GunController : MonoBehaviour {
 
 	virtual protected void Start()
 	{
-		ammoText = GameManager.instance.ammoText;
-		ammoSlider = GameManager.instance.ammoSlider;
-		ammoLowAnimator = GameManager.instance.ammoLowText.gameObject.GetComponent<Animator>();
+		ammoText = GameManager.ui.ammoText;
+		ammoSlider = GameManager.ui.ammoSlider;
+		ammoLowAnimator = GameManager.ui.ammoLowText.gameObject.GetComponent<Animator>();
 
-		timer = 1f / fireRate;
+		timer = 0;
 		UpdateAmmoCounter();
 	}
 
@@ -55,11 +57,14 @@ public abstract class GunController : MonoBehaviour {
 		if((float)ammo / (float)maxAmmo < 0.3f)
 		{
 			ammoLowAnimator.SetBool("AmmoLow", true);
-			Debug.Log("LowAmmoIn");
 		} else
 		{
 			ammoLowAnimator.SetBool("AmmoLow", false);
-			Debug.Log("LowAmmoOut");
+		}
+
+		if(ammo == 0)
+		{
+			GameManager.instance.player.GetComponent<PlayerController>().NoAmmo();
 		}
 	}
 

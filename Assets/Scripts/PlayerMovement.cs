@@ -8,11 +8,11 @@ public class PlayerMovement : MonoBehaviour {
 	Vector3 movement;
 	Rigidbody rb;
 	float camRayLength = 100f;
-	int floorMask;
+	int aimTargetMask;
 
 	void Awake () {
 		rb = GetComponent<Rigidbody>();
-		floorMask = LayerMask.GetMask("Floor");
+		aimTargetMask = LayerMask.GetMask("AimTarget");
 	}
 	
 	void FixedUpdate () {
@@ -36,7 +36,7 @@ public class PlayerMovement : MonoBehaviour {
 		Ray camRay = Camera.main.ScreenPointToRay(Input.mousePosition);
 		RaycastHit rayHit;
 
-		if(Physics.Raycast(camRay, out rayHit, camRayLength, floorMask))
+		if(Physics.Raycast(camRay, out rayHit, camRayLength, aimTargetMask))
 		{
 			Vector3 offset = transform.position - rayHit.point;
 			offset.y = 0f;

@@ -11,7 +11,7 @@ public class SpawnManager : MonoBehaviour {
 	public GameObject[] enemies;
 	public SpawnGroup[] spawnGroups;
 
-	int maxEnemiesAlive = 60;
+	int maxEnemiesAlive = 80;
 
 	public int startingEnemiesPerLevel = 20;
 	int enemiesPerLevel = 20;
@@ -20,7 +20,9 @@ public class SpawnManager : MonoBehaviour {
 	public float spawnRate = 1f;
 	float defaultDelay = 1f;
 	public float increasePerLevel = 0.2f;
+	public float nextLevelDelay = 10f;
 
+	Animator levelCountdown;
 	float timer = 0f;
 	bool spawning = true;
 
@@ -36,36 +38,47 @@ public class SpawnManager : MonoBehaviour {
 		}
 
 		player = GameManager.instance.player;
+		levelCountdown = GameManager.ui.levelCountdownText.gameObject.GetComponent<Animator>();
 
 		enemiesPerLevel = startingEnemiesPerLevel;
 	}
 
 	private void Update()
 	{
-		if (spawning)
+		if (GameManager.instance.playerAlive)
 		{
-			timer -= Time.deltaTime;
+			if (spawning)
+			{
+				timer -= Time.deltaTime;
 
-			if (timer <= 0 && enemiesAlive < maxEnemiesAlive)
-			{
-				SpawnGroup();
-				timer = defaultDelay * (1 / spawnRate);
-			}
+				if (timer <= 0 && enemiesAlive < maxEnemiesAlive)
+				{
+					SpawnGroup();
+					timer = defaultDelay * (1 / spawnRate);
+				}
 
-			if (enemiesSpawned >= enemiesPerLevel)
-			{
-				spawning = false;
+				if (enemiesSpawned >= enemiesPerLevel)
+				{
+					EndSpawning();
+				}
 			}
-		}
-		else
-		{
-			if (enemiesAlive == 0)
+			else
 			{
-				GameManager.instance.NextLevel();
-				enemiesSpawned = 0;
-				enemiesPerLevel += (int)(enemiesPerLevel * increasePerLevel * GameManager.instance.difficultyModifier);
-				spawnRate += spawnRate * increasePerLevel * GameManager.instance.difficultyModifier;
-				spawning = true;
+				if (enemiesAlive == 0)
+				{
+					NextLevel();
+				}
+				else
+				{
+					timer -= Time.deltaTime;
+
+					GameManager.ui.levelCountdownText.text = ((int)(timer + 1)).ToString();
+
+					if (timer <= 0)
+					{
+						NextLevel();
+					}
+				}
 			}
 		}
 	}
@@ -82,5 +95,23 @@ public class SpawnManager : MonoBehaviour {
 	public GameObject GetEnemyToSpawn()
 	{
 		return enemies[Random.Range(0, enemies.Length)];
+	}
+
+	public void EndSpawning()
+	{
+		spawning = false;
+		timer = nextLevelDelay;
+		levelCountdown.SetBool("CountdownEnabled", true);
+	}
+
+	public void NextLevel()
+	{
+		GameManager.instance.NextLevel();
+
+		levelCountdown.SetBool("CountdownEnabled", false);
+		enemiesSpawned = 0;
+		enemiesPerLevel += (int)(enemiesPerLevel * increasePerLevel * GameManager.instance.difficultyModifier);
+		spawnRate += spawnRate * increasePerLevel * GameManager.instance.difficultyModifier;
+		spawning = true;
 	}
 }

@@ -2,10 +2,12 @@
 using System.Collections;
 using UnityEngine.UI;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
-	public static GameManager instance = null;
+	public static GameManager instance;
+	public static UIManager ui;
 
 	public int score;
 	public int highScore;
@@ -13,18 +15,9 @@ public class GameManager : MonoBehaviour {
 	public int level;
 	public float difficultyModifier;
 
-	public GameObject player;
+	public bool playerAlive = true;
 
-	public Text scoreText;
-	public Text highScoreText;
-	public Text ammoText;
-	public Slider ammoSlider;
-	public Text bombsText;
-	public Text maxBombsText;
-	public Text healthText;
-	public Slider healthSlider;
-	public Text levelText;
-	public Text ammoLowText;
+	public GameObject player;
 
 	public Vector3 cursorLocation;
 
@@ -33,38 +26,28 @@ public class GameManager : MonoBehaviour {
 
 	private void Awake()
 	{
-		if (instance == null)
+		if (instance == null || instance == this)
 		{
 			instance = this;
+
+			DontDestroyOnLoad(gameObject);
 		}
 		else if (instance != this)
 		{
 			Destroy(gameObject);
 		}
 
-		DontDestroyOnLoad(gameObject);
+		Cursor.SetCursor(cursorTexture, cursorHotSpot, CursorMode.Auto);
+		cursorLocation = new Vector3();
+	}
 
+	public void PrepareScene()
+	{
 		level = 1;
 		difficultyModifier = 1f;
 
-		Cursor.SetCursor(cursorTexture, cursorHotSpot, CursorMode.Auto);
-		cursorLocation = new Vector3();
-
-		// Getting all ui objects
-		player = GameObject.FindGameObjectWithTag("Player");
-		scoreText = GameObject.FindGameObjectWithTag("ScoreText").GetComponent<Text>();
-		highScoreText = GameObject.FindGameObjectWithTag("HighScoreText").GetComponent<Text>();
-		ammoText = GameObject.Find("AmmoText").GetComponent<Text>();
-		ammoSlider = GameObject.Find("AmmoSlider").GetComponent<Slider>();
-		bombsText = GameObject.Find("BombsText").GetComponent<Text>();
-		maxBombsText = GameObject.Find("MaxBombsText").GetComponent<Text>();
-		healthText = GameObject.Find("HealthText").GetComponent<Text>();
-		healthSlider = GameObject.Find("HealthSlider").GetComponent<Slider>();
-		levelText = GameObject.Find("LevelText").GetComponent<Text>();
-		ammoLowText = GameObject.Find("AmmoLowText").GetComponent<Text>();
-
-		UpdateScore();
-		UpdateLevel();
+		ui.UpdateScore(score, highScore);
+		ui.UpdateLevel(level);
 	}
 
 	private void Update()
@@ -83,25 +66,30 @@ public class GameManager : MonoBehaviour {
 			highScore = score;
 		}
 
-		UpdateScore();
-	}
-
-	public void UpdateScore()
-	{
-		scoreText.text = score.ToString();
-		highScoreText.text = highScore.ToString();
-	}
-
-	public void UpdateLevel()
-	{
-		levelText.text = "Level " + level.ToString();
-		levelText.gameObject.GetComponent<Animator>().SetTrigger("NextLevel");
+		ui.UpdateScore(this.score, highScore);
 	}
 
 	public void NextLevel()
 	{
 		level++;
-		UpdateLevel();
+		ui.UpdateLevel(level);
+	}
+
+	public void RestartGame()
+	{
+		Debug.Log("Restarting");
+
+		level = 1;
+		score = 0;
+		playerAlive = true;
+
+		SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+	}
+
+	public void PlayerDead()
+	{
+		playerAlive = false;
+		ui.PlayerDead();
 	}
 
 	public void Exit()

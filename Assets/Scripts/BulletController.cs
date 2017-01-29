@@ -9,16 +9,18 @@ public class BulletController : MonoBehaviour {
 	public Vector3 shotFrom;
 
 	int layerShootable;
+	int layerEnvironment;
 	string enemyTag = "Enemy";
 
 	private void Awake()
 	{
 		layerShootable = LayerMask.NameToLayer("Shootable");
+		layerEnvironment = LayerMask.NameToLayer("Environment");
 	}
 
 	private void OnTriggerEnter(Collider other)
 	{
-		if (other.gameObject.layer == layerShootable)
+		if (other.gameObject.layer == layerShootable || other.gameObject.layer == layerEnvironment)
 		{	
 			if (other.CompareTag(enemyTag))
 			{

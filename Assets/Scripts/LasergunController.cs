@@ -23,6 +23,8 @@ public class LasergunController : GunController {
 	{
 		base.Update();
 
+		transform.rotation = Quaternion.LookRotation(transform.position - GameManager.instance.cursorLocation);
+
 		if (timer <= (1 / fireRate) - effectDisplayTime)
 		{
 			line.enabled = false;
