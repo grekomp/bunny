@@ -16,8 +16,11 @@ public class UIManager : MonoBehaviour {
 	public Text levelText;
 	public Text levelCountdownText;
 	public Text ammoLowText;
-	GameObject gameOverUI;
-	Button restartButton;
+	public GameObject gameOverUI;
+	public Button restartButton;
+	public Button exitButton;
+	public Button playButton;
+	public GameObject pauseMenu;
 
 	private void Awake()
 	{
@@ -35,8 +38,18 @@ public class UIManager : MonoBehaviour {
 		levelCountdownText = GameObject.Find("LevelCountdownText").GetComponent<Text>();
 		ammoLowText = GameObject.Find("AmmoLowText").GetComponent<Text>();
 		gameOverUI = GameObject.Find("GameOverUI");
+		playButton = GameObject.Find("ResumeButton").GetComponent<Button>();
+		playButton.onClick.AddListener(PlayGame);
 		restartButton = GameObject.Find("RestartButton").GetComponent<Button>();
 		restartButton.onClick.AddListener(RestartGame);
+		exitButton = GameObject.Find("ExitButton").GetComponent<Button>();
+		exitButton.onClick.AddListener(ExitGame);
+		pauseMenu = GameObject.Find("PauseMenu");
+
+		if(!GameManager.showNewgameMenu)
+		{
+			GameManager.instance.Play();
+		}
 	}
 
 	public void UpdateScore(int score, int highScore)
@@ -53,11 +66,33 @@ public class UIManager : MonoBehaviour {
 
 	public void PlayerDead()
 	{
-		gameOverUI.GetComponent<Animator>().SetTrigger("GameOver");
+		gameOverUI.GetComponent<Animator>().SetBool("GameOverOn", true);
+		playButton.interactable = false;
+	}
+
+	public void ShowMenu()
+	{
+		pauseMenu.GetComponent<Animator>().SetBool("MenuOn", true);
+	}
+
+	public void HideMenu()
+	{
+		pauseMenu.GetComponent<Animator>().SetBool("MenuOn", false);
+		gameOverUI.GetComponent<Animator>().SetBool("GameOverOn", false);
+	}
+
+	void PlayGame()
+	{
+		GameManager.instance.Play();
 	}
 
 	void RestartGame()
 	{
 		GameManager.instance.RestartGame();
+	}
+
+	void ExitGame()
+	{
+		GameManager.instance.Exit();
 	}
 }

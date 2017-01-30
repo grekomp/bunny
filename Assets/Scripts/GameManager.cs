@@ -9,6 +9,9 @@ public class GameManager : MonoBehaviour {
 	public static GameManager instance;
 	public static UIManager ui;
 
+	public static bool paused = true;
+	public static bool showNewgameMenu = true;
+
 	public int score;
 	public int highScore;
 
@@ -31,14 +34,16 @@ public class GameManager : MonoBehaviour {
 			instance = this;
 
 			DontDestroyOnLoad(gameObject);
+
+			Cursor.SetCursor(cursorTexture, cursorHotSpot, CursorMode.Auto);
+			cursorLocation = new Vector3();
+
+			Pause();
 		}
 		else if (instance != this)
 		{
 			Destroy(gameObject);
 		}
-
-		Cursor.SetCursor(cursorTexture, cursorHotSpot, CursorMode.Auto);
-		cursorLocation = new Vector3();
 	}
 
 	public void PrepareScene()
@@ -52,9 +57,9 @@ public class GameManager : MonoBehaviour {
 
 	private void Update()
 	{
-		if (Input.GetButton("Cancel"))
+		if (Input.GetButtonDown("Cancel"))
 		{
-			Exit();
+			TogglePause();
 		}
 	}
 
@@ -75,6 +80,40 @@ public class GameManager : MonoBehaviour {
 		ui.UpdateLevel(level);
 	}
 
+	public void TogglePause()
+	{
+		paused = !paused;
+		if (paused)
+		{
+			Pause();
+		} else
+		{
+			Play();
+		}
+	}
+
+	public void Play()
+	{
+		paused = false;
+		Time.timeScale = 1;
+		showNewgameMenu = false;
+		ui.HideMenu();
+	}
+
+	public void Pause()
+	{
+		paused = true;
+		Time.timeScale = 0;
+		ui.ShowMenu();
+	}
+
+	public void Resume()
+	{
+		paused = false;
+		Time.timeScale = 1;
+		ui.HideMenu();
+	}
+
 	public void RestartGame()
 	{
 		Debug.Log("Restarting");
@@ -89,12 +128,17 @@ public class GameManager : MonoBehaviour {
 	public void PlayerDead()
 	{
 		playerAlive = false;
+		Pause();
 		ui.PlayerDead();
 	}
 
 	public void Exit()
 	{
-		Application.Quit();
+		#if UNITY_EDITOR
+				UnityEditor.EditorApplication.isPlaying = false;
+		#else
+				 Application.Quit();
+		#endif
 	}
 
 	// Utility methods

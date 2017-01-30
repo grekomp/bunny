@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour {
 
 	private void Update()
 	{
-		if (GameManager.instance.playerAlive)
+		if (GameManager.instance.playerAlive && !GameManager.paused)
 		{
 			if (damaged)
 			{

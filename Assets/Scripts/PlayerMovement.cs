@@ -16,11 +16,14 @@ public class PlayerMovement : MonoBehaviour {
 	}
 	
 	void FixedUpdate () {
-		float h = Input.GetAxisRaw("Horizontal");
-		float v = Input.GetAxisRaw("Vertical");
+		if (!GameManager.paused && GameManager.instance.playerAlive)
+		{
+			float h = Input.GetAxisRaw("Horizontal");
+			float v = Input.GetAxisRaw("Vertical");
 
-		Move(h, v);
-		Rotate();
+			Move(h, v);
+			Rotate();
+		}
 	}
 
 	void Move(float h, float v)

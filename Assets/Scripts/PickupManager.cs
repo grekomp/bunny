@@ -17,21 +17,24 @@ public class PickupManager : MonoBehaviour {
 
 	void Update()
 	{
-		timer -= Time.deltaTime;
-
-		if (timer <= 0)
+		if (!GameManager.paused)
 		{
-			Vector3 point;
-			if (GameManager.RandomOnNavmesh(GameManager.instance.player.transform.position, range, out point))
+			timer -= Time.deltaTime;
+
+			if (timer <= 0)
 			{
-				point.y = 0.6f;
+				Vector3 point;
+				if (GameManager.RandomOnNavmesh(GameManager.instance.player.transform.position, range, out point))
+				{
+					point.y = 0.6f;
 
-				int i = (int)Random.Range(0, pickups.Length);
-				GameObject pickup = pickups[i];
+					int i = (int)Random.Range(0, pickups.Length);
+					GameObject pickup = pickups[i];
 
-				Spawn(point, pickup);
+					Spawn(point, pickup);
 
-				timer = spawnTime;
+					timer = spawnTime;
+				}
 			}
 		}
 	}

@@ -45,7 +45,7 @@ public class SpawnManager : MonoBehaviour {
 
 	private void Update()
 	{
-		if (GameManager.instance.playerAlive)
+		if (!GameManager.paused && GameManager.instance.playerAlive)
 		{
 			if (spawning)
 			{

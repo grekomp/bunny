@@ -52,6 +52,14 @@ public class Bomb : MonoBehaviour {
 		Destroy(effect, 1f);
 	}
 
+	private void OnCollisionEnter(Collision collision)
+	{
+		if(collision.collider.CompareTag("Enemy"))
+		{
+			Explode();
+		}
+	}
+
 	private void OnTriggerEnter(Collider other)
 	{
 		//Debug.Log("Entered" + other.name);
