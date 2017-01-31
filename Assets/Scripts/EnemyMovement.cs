@@ -3,6 +3,8 @@ using System.Collections;
 
 public class EnemyMovement : MonoBehaviour {
 
+	bool isAlive = true;
+	bool isSinking = false;
 	public Transform target;
 	public float speed = 10f;
 	Rigidbody rb;
@@ -17,7 +19,17 @@ public class EnemyMovement : MonoBehaviour {
 	}
 	
 	void FixedUpdate() {
-		moveTowards(target.position);
+		if (isAlive)
+		{
+			moveTowards(target.position);
+
+		} else
+		{
+			if(isSinking)
+			{
+				rb.MovePosition(transform.position + transform.up * Time.deltaTime * -1f);
+			}
+		}
 	}
 
 	public void knockback(Vector3 sourcePosition, float distance, bool fromSource = true)
@@ -46,5 +58,23 @@ public class EnemyMovement : MonoBehaviour {
 		delta.y = 0;
 
 		rb.MoveRotation(Quaternion.LookRotation(delta));
+	}
+
+	public void Die()
+	{
+		isAlive = false;
+
+		rb.isKinematic = true;
+		anim.SetTrigger("Death");
+		anim.speed = 2f;
+
+		Invoke("StartSinking", 1f);
+	}
+
+	public void StartSinking()
+	{
+		rb.constraints &= ~RigidbodyConstraints.FreezePositionY;
+		isSinking = true;
+		Destroy(gameObject, 2f);
 	}
 }

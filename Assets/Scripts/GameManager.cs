@@ -36,7 +36,7 @@ public class GameManager : MonoBehaviour {
 			DontDestroyOnLoad(gameObject);
 
 			Cursor.SetCursor(cursorTexture, cursorHotSpot, CursorMode.Auto);
-			cursorLocation = new Vector3();
+			cursorLocation = new Vector3(0,0.9f,-5f);
 
 			Pause();
 		}

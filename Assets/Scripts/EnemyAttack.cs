@@ -10,6 +10,7 @@ public class EnemyAttack : MonoBehaviour {
 
 	float timer;
 	bool playerInRange = false;
+	public bool isAlive = true;
 
 	private void Start()
 	{
@@ -20,13 +21,11 @@ public class EnemyAttack : MonoBehaviour {
 	{
 		timer += Time.deltaTime;
 
-		if (playerInRange)
+		if (playerInRange && isAlive)
 		{
 			if (timer >= 1 / attackRate)
 			{
 				timer = 0;
-
-				//Debug.Log("Attack player");
 
 				PlayerController playerController = player.GetComponent<PlayerController>();
 				playerController.GetHit(attackDmg, gameObject);
@@ -37,11 +36,8 @@ public class EnemyAttack : MonoBehaviour {
 
 	private void OnTriggerEnter(Collider other)
 	{
-		//Debug.Log("Triggered");
-
 		if (other.CompareTag("Player"))
 		{
-			//Debug.Log("Player in range");
 			playerInRange = true;
 		}
 	}
@@ -50,7 +46,6 @@ public class EnemyAttack : MonoBehaviour {
 	{
 		if (other.CompareTag("Player"))
 		{
-			//Debug.Log("Player out of range");
 			playerInRange = false;
 		}
 	}

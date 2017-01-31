@@ -139,6 +139,23 @@ public class PlayerController : MonoBehaviour {
 		return 0;
 	}
 
+	public float AddHealth(float health)
+	{
+		previousHealth = this.health;
+		this.health += health;
+		if (this.health > maxHealth)
+		{
+			health = this.health - maxHealth;
+			this.health = maxHealth;
+
+			healthText.text = this.health.ToString();
+			return health;
+		}
+
+		healthText.text = this.health.ToString();
+		return 0;
+	}
+
 	public void NoAmmo()
 	{
 		GameObject tmpWeapon = Instantiate(defaultGun, transform.position, transform.rotation, transform) as GameObject;

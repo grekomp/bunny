@@ -6,6 +6,7 @@ public class BulletgunController : GunController {
 
 	public float bulletSpeed = 10f;
 	public GameObject bullet;
+	public GameObject shotEffect;
 
 	override protected void Start()
 	{
@@ -23,6 +24,9 @@ public class BulletgunController : GunController {
 		if (timer <= 0 && ammo > 0)
 		{
 			ammo--;
+
+			GameObject effect = Instantiate(shotEffect, emmiter.transform.position, emmiter.transform.rotation, emmiter.transform);
+			Destroy(effect, 0.05f);
 
 			GameObject tmpBullet = Instantiate(bullet, emmiter.transform.position, emmiter.transform.rotation) as GameObject;
 			tmpBullet.transform.Rotate(Vector3.up * -90f);

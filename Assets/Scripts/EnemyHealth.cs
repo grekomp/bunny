@@ -5,6 +5,7 @@ public class EnemyHealth : MonoBehaviour {
 
 	public float maxHealth = 100f;
 	public float health;
+	public bool isAlive = true;
 
 	public int score = 10;
 	Color flashColor = new Color(0.6f,0,0);
@@ -29,7 +30,7 @@ public class EnemyHealth : MonoBehaviour {
 
 		Invoke("flashEnd", 0.1f);
 
-		if(health <= 0)
+		if(health <= 0 && isAlive)
 		{
 			Die();
 		}
@@ -47,8 +48,13 @@ public class EnemyHealth : MonoBehaviour {
 
 	public void Die()
 	{
+		isAlive = false;
+		gameObject.GetComponent<CapsuleCollider>().isTrigger = true;
+		gameObject.layer = 0;
 		GameManager.instance.AddScore(score);
 		SpawnManager.instance.enemiesAlive--;
-		Destroy(gameObject);
+		EnemyMovement move = gameObject.GetComponent<EnemyMovement>();
+		gameObject.GetComponent<EnemyAttack>().isAlive = false;
+		move.Die();
 	}
 }
