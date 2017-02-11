@@ -59,7 +59,7 @@ public class GameManager : MonoBehaviour {
 	{
 		if (Input.GetButtonDown("Cancel"))
 		{
-			TogglePause();
+			if(playerAlive) TogglePause();
 		}
 	}
 

@@ -12,10 +12,16 @@ public class EnemyHealth : MonoBehaviour {
 	Color defaultEmissionColor;
 
 	Renderer rend;
+	AudioSource audioSrc;
+
+	public GameObject bloodDecal;
+	public AudioClip[] deathSounds;
 
 	private void Awake()
 	{
 		health = maxHealth;
+
+		audioSrc = gameObject.GetComponent<AudioSource>();
 
 		rend = transform.GetComponentInChildren<SkinnedMeshRenderer>();
 		if(rend == null) rend = transform.GetComponentInChildren<MeshRenderer>();
@@ -48,6 +54,12 @@ public class EnemyHealth : MonoBehaviour {
 
 	public void Die()
 	{
+		audioSrc.clip = deathSounds[Random.Range(0, deathSounds.Length)];
+		audioSrc.Play();
+
+		GameObject blood = Instantiate(bloodDecal, transform.position, transform.rotation) as GameObject;
+		Destroy(blood, 120f);
+
 		isAlive = false;
 		gameObject.GetComponent<CapsuleCollider>().isTrigger = true;
 		gameObject.layer = 0;

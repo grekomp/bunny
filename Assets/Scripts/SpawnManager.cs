@@ -11,7 +11,7 @@ public class SpawnManager : MonoBehaviour {
 	public GameObject[] enemies;
 	public SpawnGroup[] spawnGroups;
 
-	int maxEnemiesAlive = 80;
+	public int maxEnemiesAlive = 80;
 
 	public int startingEnemiesPerLevel = 20;
 	int enemiesPerLevel = 20;

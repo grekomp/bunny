@@ -75,7 +75,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\HealthPickup.cs" />
     <Compile Include="Assets\Scripts\Bomb.cs" />
     <Compile Include="Assets\Scripts\BombPickup.cs" />
     <Compile Include="Assets\Scripts\BulletController.cs" />
@@ -87,19 +86,20 @@
     <Compile Include="Assets\Scripts\Floating.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\GunController.cs" />
+    <Compile Include="Assets\Scripts\HealthPickup.cs" />
     <Compile Include="Assets\Scripts\LasergunController.cs" />
     <Compile Include="Assets\Scripts\LetterSpacing.cs" />
     <Compile Include="Assets\Scripts\MeleeWeaponController.cs" />
     <Compile Include="Assets\Scripts\PickupManager.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\PlayerMovement.cs" />
+    <Compile Include="Assets\Scripts\ShockWaveController.cs" />
     <Compile Include="Assets\Scripts\SpawnGroup.cs" />
     <Compile Include="Assets\Scripts\SpawnManager.cs" />
     <Compile Include="Assets\Scripts\SpawnPoint.cs" />
     <Compile Include="Assets\Scripts\SpawnerTimed.cs" />
     <Compile Include="Assets\Scripts\UIManager.cs" />
     <Compile Include="Assets\Scripts\WeaponPickup.cs" />
-    <Compile Include="Assets\ShockWaveController.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />

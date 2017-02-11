@@ -8,9 +8,13 @@ public class BulletgunController : GunController {
 	public GameObject bullet;
 	public GameObject shotEffect;
 
+	AudioSource audioSrc;
+
 	override protected void Start()
 	{
 		base.Start();
+
+		audioSrc = gameObject.GetComponent<AudioSource>();
 	}
 
 	override protected void Update()
@@ -24,6 +28,9 @@ public class BulletgunController : GunController {
 		if (timer <= 0 && ammo > 0)
 		{
 			ammo--;
+
+			audioSrc.Stop();
+			audioSrc.Play();
 
 			GameObject effect = Instantiate(shotEffect, emmiter.transform.position, emmiter.transform.rotation, emmiter.transform);
 			Destroy(effect, 0.05f);

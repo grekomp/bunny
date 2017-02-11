@@ -9,10 +9,22 @@ public class MeleeWeaponController : GunController {
 	public float attackWaveSpeed = 1f;
 	public float lifeTime = 1f;
 
+	AudioSource audioSrc;
+
+	override protected void Start()
+	{
+		base.Start();
+
+		audioSrc = gameObject.GetComponent<AudioSource>();
+	}
+
 	public override bool Shoot()
 	{
 		if (timer <= 0)
 		{
+			audioSrc.Stop();
+			audioSrc.Play();
+
 			GameObject attack = Instantiate(attackObject, emmiter.transform.position, emmiter.transform.rotation) as GameObject;
 			attack.transform.Rotate(Vector3.right * -90f);
 

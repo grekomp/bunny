@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour {
 		GameManager.instance.player = gameObject;
 
 		gunController = GetComponentInChildren<GunController>();
+		gun = gunController.gameObject;
 		bombText = GameManager.ui.bombsText;
 		bombMaxText = GameManager.ui.maxBombsText;
 

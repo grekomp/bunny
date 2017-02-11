@@ -15,12 +15,16 @@ public class LasergunController : GunController {
 	bool isShooting = false;
 	LineRenderer line;
 	GameObject laserHitInstance;
+	AudioSource audioSrc;
+	public AudioSource audioSrcShoot;
 
 	override protected void Start()
 	{
 		base.Start();
 		line = GetComponentInChildren<LineRenderer>();
 		line.enabled = false;
+
+		audioSrc = gameObject.GetComponent<AudioSource>();
 	}
 
 	override protected void Update()
@@ -34,6 +38,8 @@ public class LasergunController : GunController {
 				if (isShooting == false)
 				{
 					laserHitInstance = Instantiate(laserHit);
+					audioSrc.Play();
+					audioSrcShoot.Play();
 				}
 				isShooting = true;
 			}
@@ -42,6 +48,8 @@ public class LasergunController : GunController {
 				if (isShooting)
 				{
 					Destroy(laserHitInstance);
+					audioSrc.Pause();
+					audioSrcShoot.Stop();
 				}
 				isShooting = false;
 			}
