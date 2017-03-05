@@ -5,10 +5,14 @@ public class PlayerMovement : MonoBehaviour {
 
 	public float speed = 3f;
 
+	public GameObject modelLegs;
+	public GameObject modelTop;
+
 	Vector3 movement;
 	Rigidbody rb;
 	float camRayLength = 100f;
 	int aimTargetMask;
+	Quaternion lastLegsRotation;
 
 	void Awake () {
 		rb = GetComponent<Rigidbody>();
@@ -29,6 +33,15 @@ public class PlayerMovement : MonoBehaviour {
 	void Move(float h, float v)
 	{
 		movement.Set(h, 0f, v);
+		if (movement != new Vector3())
+		{
+			modelLegs.transform.rotation = Quaternion.Lerp(modelLegs.transform.rotation, Quaternion.LookRotation(movement), Time.deltaTime * 10);
+			lastLegsRotation = modelLegs.transform.rotation;
+		}
+		else
+		{
+			modelLegs.transform.rotation = Quaternion.Lerp(lastLegsRotation, Quaternion.identity, Time.deltaTime * 10);
+		}
 		movement = movement.normalized * speed * Time.deltaTime;
 
 		rb.MovePosition(transform.position + movement);

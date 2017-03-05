@@ -17,9 +17,13 @@ Platform assembly: S:\Workspace\Unity\Bunny Gunny\Builds\Bunny Gunny WIP_Data\Ma
 Loading S:\Workspace\Unity\Bunny Gunny\Builds\Bunny Gunny WIP_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
 Platform assembly: S:\Workspace\Unity\Bunny Gunny\Builds\Bunny Gunny WIP_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
 Loading S:\Workspace\Unity\Bunny Gunny\Builds\Bunny Gunny WIP_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
-- Completed reload, in  0.020 seconds
+- Completed reload, in  0.019 seconds
 Platform assembly: S:\Workspace\Unity\Bunny Gunny\Builds\Bunny Gunny WIP_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: S:\Workspace\Unity\Bunny Gunny\Builds\Bunny Gunny WIP_Data\Managed\System.dll (this message is harmless)
-desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
+desktop: 1920x1080 60Hz; virtual: 3200x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
+<RI> Initialized touch support.
+UnloadTime: 0.796082 ms
+Setting up 1 worker threads for Enlighten.
+  Thread -> id: 1f00 -> priority: 1 
