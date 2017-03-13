@@ -33,9 +33,9 @@ public class PlayerMovement : MonoBehaviour {
 	void Move(float h, float v)
 	{
 		movement.Set(h, 0f, v);
-		if (movement != new Vector3())
+		if (movement != Vector3.zero)
 		{
-			modelLegs.transform.rotation = Quaternion.Lerp(modelLegs.transform.rotation, Quaternion.LookRotation(movement), Time.deltaTime * 10);
+			modelLegs.transform.rotation = Quaternion.Lerp(modelLegs.transform.rotation, Quaternion.LookRotation(-movement), Time.deltaTime * 10);
 			lastLegsRotation = modelLegs.transform.rotation;
 		}
 		else
