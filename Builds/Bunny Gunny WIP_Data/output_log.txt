@@ -20,53 +20,20 @@ Loading S:\Workspace\Unity\Bunny Gunny\Builds\Bunny Gunny WIP_Data\Managed\Unity
 - Completed reload, in  0.019 seconds
 Platform assembly: S:\Workspace\Unity\Bunny Gunny\Builds\Bunny Gunny WIP_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: S:\Workspace\Unity\Bunny Gunny\Builds\Bunny Gunny WIP_Data\Managed\System.dll (this message is harmless)
-desktop: 1920x1080 60Hz; virtual: 3200x1080 at 0,0
+desktop: 1920x1080 60Hz; virtual: 1920x1080 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 0.782852 ms
-Initialize engine version: 5.5.0f3 (38b4efef76f0)
-GfxDevice: creating device client; threaded=1
-Direct3D:
-    Version:  Direct3D 11.0 [level 11.0]
-    Renderer: NVIDIA GeForce GTX 1070 (ID=0x1b81)
-    Vendor:   NVIDIA
-    VRAM:     3072 MB
-    Driver:   21.21.13.7849
-Begin MonoManager ReloadAssembly
-Platform assembly: S:\Workspace\Unity\Bunny Gunny\Builds\Bunny Gunny WIP_Data\Managed\UnityEngine.dll (this message is harmless)
-Loading S:\Workspace\Unity\Bunny Gunny\Builds\Bunny Gunny WIP_Data\Managed\UnityEngine.dll into Unity Child Domain
-Platform assembly: S:\Workspace\Unity\Bunny Gunny\Builds\Bunny Gunny WIP_Data\Managed\Assembly-CSharp.dll (this message is harmless)
-Loading S:\Workspace\Unity\Bunny Gunny\Builds\Bunny Gunny WIP_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
-Platform assembly: S:\Workspace\Unity\Bunny Gunny\Builds\Bunny Gunny WIP_Data\Managed\UnityEngine.UI.dll (this message is harmless)
-Loading S:\Workspace\Unity\Bunny Gunny\Builds\Bunny Gunny WIP_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
-Platform assembly: S:\Workspace\Unity\Bunny Gunny\Builds\Bunny Gunny WIP_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
-Loading S:\Workspace\Unity\Bunny Gunny\Builds\Bunny Gunny WIP_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
-Platform assembly: S:\Workspace\Unity\Bunny Gunny\Builds\Bunny Gunny WIP_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
-Loading S:\Workspace\Unity\Bunny Gunny\Builds\Bunny Gunny WIP_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
-- Completed reload, in  0.017 seconds
-Platform assembly: S:\Workspace\Unity\Bunny Gunny\Builds\Bunny Gunny WIP_Data\Managed\System.Core.dll (this message is harmless)
-Platform assembly: S:\Workspace\Unity\Bunny Gunny\Builds\Bunny Gunny WIP_Data\Managed\System.dll (this message is harmless)
-desktop: 1920x1080 60Hz; virtual: 3200x1080 at 0,0
-<RI> Initializing input.
-<RI> Input initialized.
+UnloadTime: 2.562701 ms
 Restarting
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
 Unloading 4 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 4.779750 ms
+UnloadTime: 7.591430 ms
 
-Unloading 23 unused Assets to reduce memory usage. Loaded Objects now: 2606.
-Total: 0.877907 ms (FindLiveObjects: 0.076422 ms CreateObjectMapping: 0.035645 ms MarkObjects: 0.352675 ms  DeleteObjects: 0.412894 ms)
+Unloading 112 unused Assets to reduce memory usage. Loaded Objects now: 2610.
+Total: 1.077738 ms (FindLiveObjects: 0.062919 ms CreateObjectMapping: 0.047257 ms MarkObjects: 0.309468 ms  DeleteObjects: 0.657823 ms)
 
-Restarting
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Unloading 3 Unused Serialized files (Serialized files now loaded: 0)
-UnloadTime: 17.447981 ms
-
-Unloading 851 unused Assets to reduce memory usage. Loaded Objects now: 2606.
-Total: 2.972626 ms (FindLiveObjects: 0.072641 ms CreateObjectMapping: 0.076422 ms MarkObjects: 0.317839 ms  DeleteObjects: 2.505723 ms)
-
+Setting up 1 worker threads for Enlighten.
+  Thread -> id: 38dc -> priority: 1 
